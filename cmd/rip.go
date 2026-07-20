@@ -286,6 +286,7 @@ func getPagesComici(url string, cookie string) ([]utils.ComiciResult, *string, e
 	// Extract viewer id and api domain
 	viewerId, exists := doc.Find("#comici-viewer").Attr("data-comici-viewer-id")
 	apiDomain, exists := doc.Find("#comici-viewer").Attr("data-api-domain")
+	contentId, exists := doc.Find("#comici-viewer").Attr("data-content-id")
 	// Extract title.
 	title := doc.Find(".ep-main-h-h").Text()
 	// Check they exit.
@@ -300,6 +301,9 @@ func getPagesComici(url string, cookie string) ([]utils.ComiciResult, *string, e
 
 	// Create a url by splicing it together.
 	newUrl := "https://" + strings.Split(url, "/")[2] + apiDomain + "/book/contentsInfo?user-id=&comici-viewer-id=" + viewerId + "&page-from=0&page-to=1"
+	if contentId != "" {
+		newUrl = newUrl + "&contentId=" + contentId
+	}
 
 	// Make a second request.
 	res, err = utils.Request(newUrl, cookie, true)
@@ -333,6 +337,9 @@ func getPagesComici(url string, cookie string) ([]utils.ComiciResult, *string, e
 	// (Before you make fun of this code, this is literally what officials do. There's no other way LMAO)
 	// Recrate url with max pages pages.
 	newUrl = "https://" + strings.Split(url, "/")[2] + apiDomain + "/book/contentsInfo?user-id=&comici-viewer-id=" + viewerId + "&page-from=0&page-to=" + strconv.Itoa(finalPage)
+	if contentId != "" {
+		newUrl = newUrl + "&contentId=" + contentId
+	}
 
 	// Make second request.
 	res, err = utils.Request(newUrl, cookie, true)
