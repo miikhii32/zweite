@@ -28,6 +28,37 @@ type ReadBleProduct struct {
 	ID                                  string        `json:"id"`
 }
 
+type PixivResponse struct {
+	Error   bool        `json:"error"`
+	Message string      `json:"Message"`
+	Body    []PixivBody `json:"Body"`
+}
+
+type PixivBody struct {
+	Urls   PixivUrls `json:"Urls"`
+	Width  int `json:"Width"`
+	Height int `json:"Height"`
+}
+
+type PixivUrls struct {
+	ThumbMini string `json:"ThumbMini"`
+	Small     string `json:"Small"`
+	Regular   string `json:"Regular"`
+	Original  string `json:"Original"`
+}
+
+type PixivResponseTitle struct {
+	Error   bool        `json:"error"`
+	Message string      `json:"Message"`
+	Body    PixivBodyTitle `json:"Body"`
+}
+
+type PixivBodyTitle struct {
+	IllustTitle string `json:"IllustTitle"` 
+}
+
+
+
 type GigaResponse struct {
 	ReadableProduct ReadBleProduct `json:"readableProduct"`
 }
@@ -38,16 +69,15 @@ type GigaPages struct {
 	Height  int
 }
 
-
 type ComiciResult struct {
-	ImageURL string `json:"imageURL"` 
-	Scramble string `json:"scramble"` 
-	Sort int `json:"sort"` 
-	Width int `json:"width"` 
-	Height int `json:"height"` 
+	ImageURL string `json:"imageURL"`
+	Scramble string `json:"scramble"`
+	Sort     int    `json:"sort"`
+	Width    int    `json:"width"`
+	Height   int    `json:"height"`
 }
 
 type RequestComici struct {
-	TotalPages int `json:"totalPages"`
-	Result []ComiciResult `json:"result"`
+	TotalPages int            `json:"totalPages"`
+	Result     []ComiciResult `json:"result"`
 }

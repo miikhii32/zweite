@@ -6,6 +6,7 @@ package cmd
 // Imports
 import (
 	"context"
+	"fmt"
 	"slices"
 	"strings"
 
@@ -75,19 +76,11 @@ func getComiciReaders() []string {
 	return comiciReaders[:]
 }
 
-// Function that checks the url it's getting and determines the reader.
-func checkString(url string) string {
-	gigaReaders := getGigaReaders()
-	comiciReaders := getComiciReaders()
-	isGiga := slices.Contains(gigaReaders, url)
-	isComici := slices.Contains(comiciReaders, url)
-	if isGiga {
-		return "giga"
-	} else if isComici {
-		return "comici"
-	} else {
-		return ""
+func getPixiv() []string {
+	comiciReaders := [...]string{
+		"www.pixiv.net",
 	}
+	return comiciReaders[:]
 }
 
 // Main function to organize everything
@@ -99,12 +92,20 @@ func RipMain(url string, cookie string, ctx context.Context, folder string) {
 		if !strings.HasPrefix(url, "https://") {
 			runtime.EventsEmit(ctx, "error-emit", "Please submit a url!")
 		} else {
-			reader := checkString(strings.Split(url, "/")[2])
+			fmt.Println(strings.Split(url, "/")[2])
+			gigaReaders := getGigaReaders()
+			comiciReaders := getComiciReaders()
+			pixiv := getPixiv()
+			isGiga := slices.Contains(gigaReaders, strings.Split(url, "/")[2])
+			isComici := slices.Contains(comiciReaders, strings.Split(url, "/")[2])
+			isPixiv := slices.Contains(pixiv, strings.Split(url, "/")[2])
 			// Rip accordingly.
-			if reader == "giga" {
+			if isGiga {
 				rippers.RipGiga(url, cookie, ctx, folder)
-			} else if reader == "comici" {
+			} else if isComici {
 				rippers.RipComici(url, cookie, ctx, folder)
+				} else if isPixiv {
+				rippers.RipPixiv(url, cookie, ctx, folder)
 			} else {
 				runtime.EventsEmit(ctx, "error-emit", "We currently do not support this url. Apologies!")
 			}
