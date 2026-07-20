@@ -22,6 +22,7 @@ import (
 	"strings"
 
 	"NewHakuneko/utils"
+	"NewHakuneko/rippers"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -103,167 +104,7 @@ func checkString(url string) string {
 	}
 }
 
-// Get all the pages for Giga Reader.
-func getPagesGiga(url string, cookie string) ([]utils.GigaPages, *string, error) {
-	// Make the request, using an external utility.
-	res, err := utils.Request(url, cookie, false)
-	// Err check
-	if err != nil {
-		return nil, nil, fmt.Errorf("%v", err)
-	}
 
-	// Parse the body
-	doc, err := goquery.NewDocumentFromReader(res.Body)
-	// Error check.
-	if err != nil {
-		return nil, nil, fmt.Errorf("Failed to parse HTML: %v", err)
-	}
-	// Close the request
-	defer res.Body.Close()
-
-	// Extract the needed data
-	gigaPagesData, exists := doc.Find("#episode-json").Attr("data-value")
-	// Check if it exists.
-	if !exists {
-		return nil, nil, fmt.Errorf("Element does not exist, %v", err)
-	}
-
-	// Create the response variable with the correct type (imported from another file)
-	var response utils.GigaResponse
-	// Handle the JSON
-	err = json.Unmarshal([]byte(gigaPagesData), &response)
-	// Error check
-	if err != nil {
-		return nil, nil, fmt.Errorf("Error parsing JSON: %v", err)
-	}
-
-	// Check if chapter is available.
-	if response.ReadableProduct.HasPurchased == false && response.ReadableProduct.IsPublic == false {
-		return nil, nil, fmt.Errorf("It seems like you don't have access to this content. Maybe try adding a cookie string, or if you are adding one, check to see if you've purchased the desired content.")
-	}
-
-	// Make a new variable with the pages, with the imported type.
-	var Pages []utils.GigaPages
-
-	// Remake the array with the variable.
-	for _, value := range response.ReadableProduct.PageStructure.Pages {
-		if value.Height != 0 {
-			Pages = append(Pages, utils.GigaPages{PageUrl: value.Src, Height: value.Height, Width: value.Width})
-		}
-	}
-
-	// Final return.
-	return Pages, &response.ReadableProduct.Title, nil
-}
-
-// Function to download the pages with Giga.
-func downloadPagesGiga(pages []utils.GigaPages, title string, ctx context.Context, folder string) error {
-	// Make the directory of the downloaded file
-	os.Mkdir(path.Join(folder, title), os.ModePerm)
-
-	runtime.EventsEmit(ctx, "title-get", "Downloading "+ title)
-
-	// Loop over all the pages
-	for index, value := range pages {
-		// Get the full path.
-		fullPath := filepath.Join(folder, title, strconv.Itoa(index)+".png")
-
-		// Make the request.
-		res, err := utils.Request(value.PageUrl, "", false)
-		// Err check.
-		if err != nil {
-			return fmt.Errorf("%v", err)
-		}
-		// Close the request.
-		defer res.Body.Close()
-
-		// Decode the body of the image.
-		srcImg, _, err := image.Decode(res.Body)
-		// Err check.
-		if err != nil {
-			return fmt.Errorf("failed to unscramble image: %w", err)
-		}
-
-		// Set the bounds of the image
-		bounds := srcImg.Bounds()
-		width := bounds.Dx()
-		height := bounds.Dy()
-
-		// Set the dividing and multiplying number.
-		div := 4
-		mul := 8
-
-		// Convert image to RGBA format.
-		rgbaSrc := image.NewRGBA(bounds)
-
-		// Draw initial image.
-		draw.Draw(rgbaSrc, bounds, srcImg, bounds.Min, draw.Src)
-
-		// Create a clean destination canvas
-		rgbaDest := image.NewRGBA(bounds)
-		// Fill the background first
-		draw.Draw(rgbaDest, bounds, rgbaSrc, bounds.Min, draw.Src)
-		// Calculate total tiles.
-		totalTiles := div * mul
-		// Calculate the heights and widths of the tiles.
-		fixedWidth := (width / totalTiles) * mul
-		fixedHeight := (height / totalTiles) * mul
-
-		// Map out where each tile goes based on the inverted matrix translation
-		for y := 0; y < div; y++ {
-			for x := 0; x < div; x++ {
-				sourceX := y * fixedWidth
-				sourceY := x * fixedHeight
-
-				destX := x * fixedWidth
-				destY := y * fixedHeight
-
-				srcRect := image.Rect(sourceX, sourceY, sourceX+fixedWidth, sourceY+fixedHeight)
-				destRect := image.Rect(destX, destY, destX+fixedWidth, destY+fixedHeight)
-
-				draw.Draw(rgbaDest, destRect, rgbaSrc, srcRect.Min, draw.Src)
-			}
-		}
-
-		// Create the final file.
-		outFile, err := os.Create(fullPath)
-		// Err check.
-		if err != nil {
-			return fmt.Errorf("Failed to create output file: %w", err)
-		}
-		// Close the final file.
-		defer outFile.Close()
-
-		// Encode the final file.
-		if err := png.Encode(outFile, rgbaDest); err != nil {
-			return fmt.Errorf("Failed to encode final file: %w", err)
-		}
-
-		// Final log message.
-		runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled " + fullPath)
-	}
-	
-	runtime.EventsEmit(ctx, "title-get", "Done! Enjoy!")
-
-	// Return no error if loop completes normally.
-	return nil
-}
-
-// Main ripping function for GigaReader.
-func ripGiga(url string, cookie string, ctx context.Context, folder string) {
-	// Get the pages, Title, and error in case.
-	pages, title, error := getPagesGiga(url, cookie)
-	// Err check
-	if error != nil {
-		runtime.EventsEmit(ctx, "error-emit", fmt.Sprintf("%v", error))
-	} else {
-		// Downloading and de scrambling the pages.
-		error = downloadPagesGiga(pages, *title, ctx, folder)
-		if error != nil {
-			runtime.EventsEmit(ctx, "error-emit", fmt.Sprintf("%v", error))
-		}
-	}
-}
 
 // Function to get pages for Comici
 func getPagesComici(url string, cookie string) ([]utils.ComiciResult, *string, error) {
@@ -388,7 +229,7 @@ func downloadPagesComici(pages []utils.ComiciResult, title string, ctx context.C
 	// Create the directory with the title
 	os.Mkdir(path.Join(folder, title), os.ModePerm)
 	// Log to tell the user.
-	runtime.EventsEmit(ctx, "title-get", "Downloading " + title)
+	runtime.EventsEmit(ctx, "title-get", "Downloading "+title)
 
 	// Loop over pages.
 	for index, value := range pages {
@@ -423,7 +264,7 @@ func downloadPagesComici(pages []utils.ComiciResult, title string, ctx context.C
 
 		// Make RGBA layers.
 		rgbaSrc := image.NewRGBA(bounds)
-		
+
 		// Draw basic canvas
 		draw.Draw(rgbaSrc, bounds, srcImg, bounds.Min, draw.Src)
 		canvas := image.NewRGBA(bounds)
@@ -454,9 +295,9 @@ func downloadPagesComici(pages []utils.ComiciResult, title string, ctx context.C
 		}
 
 		// Log that you're done with the page page.
-		runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled " + fullPath)
+		runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled "+fullPath)
 	}
-	
+
 	// Final log
 	runtime.EventsEmit(ctx, "title-get", "Done! Enjoy!")
 
@@ -480,20 +321,19 @@ func ripComici(url string, cookie string, ctx context.Context, folder string) {
 	}
 }
 
-
 // Main function to organize everything
 func RipMain(url string, cookie string, ctx context.Context, folder string) {
-	if url == ""{
+	if url == "" {
 		runtime.EventsEmit(ctx, "error-emit", "You need to send something for us to rip!")
 	} else {
 		// Check what reader we are using.
-		if !strings.HasPrefix(url, "https://"){
+		if !strings.HasPrefix(url, "https://") {
 			runtime.EventsEmit(ctx, "error-emit", "Please submit a url!")
 		} else {
 			reader := checkString(strings.Split(url, "/")[2])
 			// Rip accordingly.
 			if reader == "giga" {
-				ripGiga(url, cookie, ctx, folder)
+				rippers.RipGiga(url, cookie, ctx, folder)
 			} else if reader == "comici" {
 				ripComici(url, cookie, ctx, folder)
 			} else {
