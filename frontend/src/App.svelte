@@ -1,11 +1,12 @@
 <script lang="ts">
-  import logo from './assets/images/logo-universal.png'
   import { Rip, SelectTargetDirectory, GetDefaultDocumentsFolder } from '../wailsjs/go/main/App.js'
   import { onDestroy, onMount } from 'svelte';
   import { EventsOn } from "../wailsjs/runtime"
+  import Modal from '../components/Modal.svelte';
 
   let resultText: string = ""
   let url: string = "";
+  let cookies: string = "";
   let err: boolean = false;
   let errMsg: string = "";
   let unsubError
@@ -13,6 +14,7 @@
   let unsubPage
   let selectedFolder = "";
   let statusMessage = "";
+  let isModalOpen = false;
 
   onMount(() => {
     unsubError = EventsOn("error-emit", (data) => {
@@ -49,7 +51,7 @@
     if (selectedFolder === ""){
       selectedFolder = await GetDefaultDocumentsFolder()
     }
-    Rip(url, "", selectedFolder)
+    Rip(url, cookies, selectedFolder)
   }
 </script>
 
@@ -61,25 +63,43 @@
       <div class="input-div">
         <input type="text" class="input-box" placeholder="Paste your link here!" bind:value={url}>
       </div>
+      <div class="msgs">
+        {#if err}
+          <p>{errMsg}</p>
+        {:else}
+          <p>{resultText}</p>
+        {/if}
+      </div>
       <div class="input-div">
         <button class="input-btn" on:click={greet}>Submit!</button>
       </div>
-      {#if err}
-        <p>{errMsg}</p>
-      {:else}
-        <p>{resultText}</p>
-      {/if}
+      <div class="input-div">
+        <button class="input-btn" on:click={() => isModalOpen = true}>Add Cookies</button>
+      </div>
     </div>
     <div class="container">
-    <button on:click={handlePickFolder}>
+    <button class="input-btn" on:click={handlePickFolder}>
         Choose Download Location
     </button>
+    <Modal bind:open={isModalOpen}>
+      <h2>Add cookies</h2>
+      <div class="input-div">
+        <input type="text" class="input-box" placeholder="Paste your cookies here!" bind:value={cookies}>
+      </div>
+  </Modal>
   </div>
   </div>
 </main>
 
 <style>
 
+  h1 {
+    color: white;
+  }
+  
+  h2 {
+    color: white;
+  }
   .input-div {
     display: flex;
     justify-content: center;
@@ -112,6 +132,14 @@
   .input-box:hover{
     background: none;
     outline: none;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  .msgs {
+    padding-bottom: 2rem;
   }
 
 </style>
