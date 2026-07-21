@@ -1,0 +1,42 @@
+// schema.proto
+syntax = "proto3";
+package book_requests;
+option go_package = "./protoBookRequests";
+
+message BookDeviceInfo {
+  string secret = 1;
+  string appVer = 2;
+  int32 deviceType = 3;
+  string osVer = 4;
+  bool isTablet = 5;
+  int32 imageQuality = 6;
+}
+
+message BookUserPoint {
+  uint32 free = 1;
+  uint32 paid = 2;
+}
+
+message BookWebMangaViewerRequest {
+  BookDeviceInfo deviceInfo = 1;
+  uint32 chapterId = 2;       // Received value: 24683
+  bool useTicket = 3;         // Received value: false (0)
+  uint32 consumePoint = 4;    // Received value: 0
+}
+
+message BookImage {
+  string imageUrl = 1;
+  string urlScheme = 2;
+  string iv = 3;
+  string encryptionKey = 4;
+  uint32 imageWidth = 5;
+  uint32 imageHeight = 6;
+}
+
+message ViewerPage {
+  BookImage image = 1;
+}
+
+message WebMangaViewerResponse {
+  repeated ViewerPage pages = 1;
+}
