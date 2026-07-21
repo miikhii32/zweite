@@ -90,7 +90,7 @@ func downloadPagesPixiv(pages []utils.GigaPages, title string, ctx context.Conte
 	// Loop over all the pages
 	for index, value := range pages {
 		// Get the full path.
-		fullPath := filepath.Join(folder, title, strconv.Itoa(index)+".png")
+		fullPath := filepath.Join(folder, title, strconv.Itoa(index+1)+".png")
 
 		// Make the request.
 		res, err := utils.Request(value.PageUrl, "", true)

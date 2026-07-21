@@ -249,12 +249,11 @@ func downloadPagesFuz(pages []*utils.ViewerPage, title string, ctx context.Conte
 	// Loop over all the pages
 	for index, value := range pages {
 		if value.GoogleAds != nil { 
-			fmt.Printf("Reached GoogleAds at index %d. Stopping loop.\n", index)
 			break
 		}
 		if (!value.Image.IsExtraPage){
 				// Get the full path.
-				fullPath := filepath.Join(folder, title, strconv.Itoa(index)+".png")
+				fullPath := filepath.Join(folder, title, strconv.Itoa(index+1)+".png")
 		
 				// Make the request.
 				res, err := utils.Request("https://img.comic-fuz.com" + value.Image.ImageUrl, "", false)

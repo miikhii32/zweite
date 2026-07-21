@@ -149,7 +149,7 @@ func downloadPagesComici(pages []utils.ComiciResult, title string, ctx context.C
 	// Loop over pages.
 	for index, value := range pages {
 		// Get the full path.
-		fullPath := filepath.Join(folder, title, strconv.Itoa(index)+".png")
+		fullPath := filepath.Join(folder, title, strconv.Itoa(index+1)+".png")
 
 		// Make a request.
 		res, err := utils.Request(value.ImageURL, "", true)
