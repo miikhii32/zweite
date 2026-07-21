@@ -355,16 +355,157 @@ func (x *ViewerPage) GetImage() *BookImage {
 	return nil
 }
 
+type WebInfo struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title          string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	CoverUrl       string                 `protobuf:"bytes,3,opt,name=cover_url,json=coverUrl,proto3" json:"cover_url,omitempty"`
+	Price          uint32                 `protobuf:"varint,4,opt,name=price,proto3" json:"price,omitempty"`
+	DiscountPrice  uint32                 `protobuf:"varint,5,opt,name=discount_price,json=discountPrice,proto3" json:"discount_price,omitempty"`
+	IsPurchased    bool                   `protobuf:"varint,6,opt,name=is_purchased,json=isPurchased,proto3" json:"is_purchased,omitempty"`
+	IsFree         bool                   `protobuf:"varint,7,opt,name=is_free,json=isFree,proto3" json:"is_free,omitempty"`
+	DisplayOrder   uint32                 `protobuf:"varint,8,opt,name=display_order,json=displayOrder,proto3" json:"display_order,omitempty"`
+	ReleaseDate    string                 `protobuf:"bytes,10,opt,name=release_date,json=releaseDate,proto3" json:"release_date,omitempty"`
+	SampleImageUrl string                 `protobuf:"bytes,13,opt,name=sample_image_url,json=sampleImageUrl,proto3" json:"sample_image_url,omitempty"`
+	CampaignText   string                 `protobuf:"bytes,14,opt,name=campaign_text,json=campaignText,proto3" json:"campaign_text,omitempty"`
+	Description    string                 `protobuf:"bytes,15,opt,name=description,proto3" json:"description,omitempty"`
+	SeriesTitle    string                 `protobuf:"bytes,20,opt,name=series_title,json=seriesTitle,proto3" json:"series_title,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *WebInfo) Reset() {
+	*x = WebInfo{}
+	mi := &file_schemaBook_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WebInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WebInfo) ProtoMessage() {}
+
+func (x *WebInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_schemaBook_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WebInfo.ProtoReflect.Descriptor instead.
+func (*WebInfo) Descriptor() ([]byte, []int) {
+	return file_schemaBook_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *WebInfo) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *WebInfo) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *WebInfo) GetCoverUrl() string {
+	if x != nil {
+		return x.CoverUrl
+	}
+	return ""
+}
+
+func (x *WebInfo) GetPrice() uint32 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *WebInfo) GetDiscountPrice() uint32 {
+	if x != nil {
+		return x.DiscountPrice
+	}
+	return 0
+}
+
+func (x *WebInfo) GetIsPurchased() bool {
+	if x != nil {
+		return x.IsPurchased
+	}
+	return false
+}
+
+func (x *WebInfo) GetIsFree() bool {
+	if x != nil {
+		return x.IsFree
+	}
+	return false
+}
+
+func (x *WebInfo) GetDisplayOrder() uint32 {
+	if x != nil {
+		return x.DisplayOrder
+	}
+	return 0
+}
+
+func (x *WebInfo) GetReleaseDate() string {
+	if x != nil {
+		return x.ReleaseDate
+	}
+	return ""
+}
+
+func (x *WebInfo) GetSampleImageUrl() string {
+	if x != nil {
+		return x.SampleImageUrl
+	}
+	return ""
+}
+
+func (x *WebInfo) GetCampaignText() string {
+	if x != nil {
+		return x.CampaignText
+	}
+	return ""
+}
+
+func (x *WebInfo) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *WebInfo) GetSeriesTitle() string {
+	if x != nil {
+		return x.SeriesTitle
+	}
+	return ""
+}
+
 type WebMangaViewerResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Pages         []*ViewerPage          `protobuf:"bytes,1,rep,name=pages,proto3" json:"pages,omitempty"`
+	Info          *WebInfo               `protobuf:"bytes,8,opt,name=info,proto3" json:"info,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *WebMangaViewerResponse) Reset() {
 	*x = WebMangaViewerResponse{}
-	mi := &file_schemaBook_proto_msgTypes[5]
+	mi := &file_schemaBook_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -376,7 +517,7 @@ func (x *WebMangaViewerResponse) String() string {
 func (*WebMangaViewerResponse) ProtoMessage() {}
 
 func (x *WebMangaViewerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_schemaBook_proto_msgTypes[5]
+	mi := &file_schemaBook_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -389,12 +530,19 @@ func (x *WebMangaViewerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WebMangaViewerResponse.ProtoReflect.Descriptor instead.
 func (*WebMangaViewerResponse) Descriptor() ([]byte, []int) {
-	return file_schemaBook_proto_rawDescGZIP(), []int{5}
+	return file_schemaBook_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *WebMangaViewerResponse) GetPages() []*ViewerPage {
 	if x != nil {
 		return x.Pages
+	}
+	return nil
+}
+
+func (x *WebMangaViewerResponse) GetInfo() *WebInfo {
+	if x != nil {
+		return x.Info
 	}
 	return nil
 }
@@ -434,9 +582,25 @@ const file_schemaBook_proto_rawDesc = "" +
 	"\vimageHeight\x18\x06 \x01(\rR\vimageHeight\"<\n" +
 	"\n" +
 	"ViewerPage\x12.\n" +
-	"\x05image\x18\x01 \x01(\v2\x18.book_requests.BookImageR\x05image\"I\n" +
+	"\x05image\x18\x01 \x01(\v2\x18.book_requests.BookImageR\x05image\"\xa1\x03\n" +
+	"\aWebInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1b\n" +
+	"\tcover_url\x18\x03 \x01(\tR\bcoverUrl\x12\x14\n" +
+	"\x05price\x18\x04 \x01(\rR\x05price\x12%\n" +
+	"\x0ediscount_price\x18\x05 \x01(\rR\rdiscountPrice\x12!\n" +
+	"\fis_purchased\x18\x06 \x01(\bR\visPurchased\x12\x17\n" +
+	"\ais_free\x18\a \x01(\bR\x06isFree\x12#\n" +
+	"\rdisplay_order\x18\b \x01(\rR\fdisplayOrder\x12!\n" +
+	"\frelease_date\x18\n" +
+	" \x01(\tR\vreleaseDate\x12(\n" +
+	"\x10sample_image_url\x18\r \x01(\tR\x0esampleImageUrl\x12#\n" +
+	"\rcampaign_text\x18\x0e \x01(\tR\fcampaignText\x12 \n" +
+	"\vdescription\x18\x0f \x01(\tR\vdescription\x12!\n" +
+	"\fseries_title\x18\x14 \x01(\tR\vseriesTitle\"u\n" +
 	"\x16WebMangaViewerResponse\x12/\n" +
-	"\x05pages\x18\x01 \x03(\v2\x19.book_requests.ViewerPageR\x05pagesB\x15Z\x13./protoBookRequestsb\x06proto3"
+	"\x05pages\x18\x01 \x03(\v2\x19.book_requests.ViewerPageR\x05pages\x12*\n" +
+	"\x04info\x18\b \x01(\v2\x16.book_requests.WebInfoR\x04infoB\x15Z\x13./protoBookRequestsb\x06proto3"
 
 var (
 	file_schemaBook_proto_rawDescOnce sync.Once
@@ -450,24 +614,26 @@ func file_schemaBook_proto_rawDescGZIP() []byte {
 	return file_schemaBook_proto_rawDescData
 }
 
-var file_schemaBook_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_schemaBook_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_schemaBook_proto_goTypes = []any{
 	(*BookDeviceInfo)(nil),            // 0: book_requests.BookDeviceInfo
 	(*BookUserPoint)(nil),             // 1: book_requests.BookUserPoint
 	(*BookWebMangaViewerRequest)(nil), // 2: book_requests.BookWebMangaViewerRequest
 	(*BookImage)(nil),                 // 3: book_requests.BookImage
 	(*ViewerPage)(nil),                // 4: book_requests.ViewerPage
-	(*WebMangaViewerResponse)(nil),    // 5: book_requests.WebMangaViewerResponse
+	(*WebInfo)(nil),                   // 5: book_requests.WebInfo
+	(*WebMangaViewerResponse)(nil),    // 6: book_requests.WebMangaViewerResponse
 }
 var file_schemaBook_proto_depIdxs = []int32{
 	0, // 0: book_requests.BookWebMangaViewerRequest.deviceInfo:type_name -> book_requests.BookDeviceInfo
 	3, // 1: book_requests.ViewerPage.image:type_name -> book_requests.BookImage
 	4, // 2: book_requests.WebMangaViewerResponse.pages:type_name -> book_requests.ViewerPage
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	5, // 3: book_requests.WebMangaViewerResponse.info:type_name -> book_requests.WebInfo
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_schemaBook_proto_init() }
@@ -481,7 +647,7 @@ func file_schemaBook_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_schemaBook_proto_rawDesc), len(file_schemaBook_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -37,6 +37,23 @@ message ViewerPage {
   BookImage image = 1;
 }
 
+message WebInfo {
+  uint32 id = 1; 
+  string title = 2;
+  string cover_url = 3;
+  uint32 price = 4;
+  uint32 discount_price = 5;
+  bool is_purchased = 6;
+  bool is_free = 7;
+  uint32 display_order = 8;
+  string release_date = 10;
+  string sample_image_url = 13;
+  string campaign_text = 14;
+  string description = 15;
+  string series_title = 20;
+}
+
 message WebMangaViewerResponse {
   repeated ViewerPage pages = 1;
+  WebInfo info = 8;
 }
