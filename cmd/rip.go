@@ -83,6 +83,13 @@ func getPixiv() []string {
 	return comiciReaders[:]
 }
 
+func getFuz() []string {
+	comiciReaders := [...]string{
+		"comic-fuz.com",
+	}
+	return comiciReaders[:]
+}
+
 // Main function to organize everything
 func RipMain(url string, cookie string, ctx context.Context, folder string) {
 	if url == "" {
@@ -96,16 +103,20 @@ func RipMain(url string, cookie string, ctx context.Context, folder string) {
 			gigaReaders := getGigaReaders()
 			comiciReaders := getComiciReaders()
 			pixiv := getPixiv()
+			fuz := getFuz()
 			isGiga := slices.Contains(gigaReaders, strings.Split(url, "/")[2])
 			isComici := slices.Contains(comiciReaders, strings.Split(url, "/")[2])
 			isPixiv := slices.Contains(pixiv, strings.Split(url, "/")[2])
+			isFuz := slices.Contains(fuz, strings.Split(url, "/")[2])
 			// Rip accordingly.
 			if isGiga {
 				rippers.RipGiga(url, cookie, ctx, folder)
 			} else if isComici {
 				rippers.RipComici(url, cookie, ctx, folder)
-				} else if isPixiv {
+			} else if isPixiv {
 				rippers.RipPixiv(url, cookie, ctx, folder)
+			} else if isFuz {
+				rippers.RipFuz(url, cookie, ctx, folder)
 			} else {
 				runtime.EventsEmit(ctx, "error-emit", "We currently do not support this url. Apologies!")
 			}

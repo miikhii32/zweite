@@ -1,0 +1,66 @@
+// schema.proto
+syntax = "proto3";
+option go_package = "./rippers";
+
+message DeviceInfo {
+  string secret = 1;
+  string appVer = 2;
+  int32 deviceType = 3;
+  string osVer = 4;
+  bool isTablet = 5;
+  int32 imageQuality = 6;
+}
+
+message UserPoint {
+  uint32 free = 1;
+  uint32 paid = 2;
+}
+
+message WebMangaViewerRequest {
+  DeviceInfo deviceInfo = 1;
+  bool useTicket = 2;
+  UserPoint consumePoint = 3;
+  uint32 chapterId = 4;
+  ChapterArgument chapterArgument = 5;
+
+  message ChapterArgument {
+    uint32 mangaId = 1;
+    int32 position = 2;
+  }
+}
+
+message Image {
+  string imageUrl = 1;
+  string urlScheme = 2;
+  string iv = 3;
+  string encryptionKey = 4;
+  uint32 imageWidth = 5;
+  uint32 imageHeight = 6;
+  bool isExtraPage = 7;
+  uint32 extraId = 8;
+  uint32 extraIndex = 9;
+  uint32 extraSlotId = 10;
+}
+
+message WebView {
+  string url = 1;
+}
+
+message LastPage {}
+message GoogleAds {}
+
+message ViewerPage {
+  Image image = 1;
+  WebView webview = 2;
+  LastPage lastPage = 3;
+  GoogleAds googleAds = 4;
+}
+
+message BookViewerResponse {
+  string viewerTitle = 1;
+  repeated ViewerPage pages = 2;
+}
+
+message WebMangaViewerResponse {
+  BookViewerResponse data = 2;
+}

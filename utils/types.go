@@ -58,6 +58,26 @@ type PixivBodyTitle struct {
 }
 
 
+type NextData struct {
+	Props PropsData `json:"props"`
+}
+
+type PropsData struct {
+	PageProps PagePropsData `json:"pageProps"`
+}
+
+type PagePropsData struct {
+	ChapterId string `json:"chapterId"`
+	Data PagePropsDataData `json:"data"`
+}
+
+type PagePropsDataData struct {
+	ChapterMainName string `json:"chapterMainName"`
+	ChapterSubName string `json:"chapterSubName"`
+	ThumbnailUrl string `json:"thumbnailUrl"`
+	MangaId int `json:"mangaId"`
+	MangaName string `json:"mangaName"`
+}
 
 type GigaResponse struct {
 	ReadableProduct ReadBleProduct `json:"readableProduct"`
