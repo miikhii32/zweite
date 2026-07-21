@@ -99,7 +99,6 @@ func RipMain(url string, cookie string, ctx context.Context, folder string) {
 		if !strings.HasPrefix(url, "https://") {
 			runtime.EventsEmit(ctx, "error-emit", "Please submit a url!")
 		} else {
-			fmt.Println(strings.Split(url, "/")[2])
 			gigaReaders := getGigaReaders()
 			comiciReaders := getComiciReaders()
 			pixiv := getPixiv()

@@ -55,7 +55,6 @@ func Request(requestedURL string, cookie string, addHeaders bool) (*http.Respons
 
 func RequestFuz(requestedURL string, cookie string, addHeaders bool, requestBuffer []byte) (*http.Response, error) {
 	req, err := http.NewRequest("POST", requestedURL, bytes.NewReader(requestBuffer))
-	fmt.Println(requestedURL)
 	if err != nil {
 		fmt.Printf("Failed to create request: %v\n", err)
 		return nil, errors.New("failed to create request")
@@ -74,7 +73,7 @@ func RequestFuz(requestedURL string, cookie string, addHeaders bool, requestBuff
 
 	if addHeaders {
 		req.Header.Add("Referer", "https://comic-fuz.com")
-		req.Header.Add("Origin", "https://comic-fuz.com/")
+		req.Header.Add("Origin", "https://comic-fuz.com")
 		req.Header.Set("Content-Type", "application/protobuf")
 		req.Header.Set("Accept", "application/protobuf")
 	}
@@ -84,6 +83,7 @@ func RequestFuz(requestedURL string, cookie string, addHeaders bool, requestBuff
 		fmt.Printf("Failed to fetch URL: %v\n", err)
 		return nil, errors.New("failed to fetch URL")
 	}
+	fmt.Print(res)
 	if res.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("bad status code: %d %s", res.StatusCode, res.Status)
 	}
