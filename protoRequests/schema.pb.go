@@ -6,7 +6,7 @@
 // 	protoc        v7.35.1
 // source: schema.proto
 
-package utils
+package protoRequests
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -687,7 +687,7 @@ var File_schema_proto protoreflect.FileDescriptor
 
 const file_schema_proto_rawDesc = "" +
 	"\n" +
-	"\fschema.proto\"\xb2\x01\n" +
+	"\fschema.proto\x12\brequests\"\xb2\x01\n" +
 	"\n" +
 	"DeviceInfo\x12\x16\n" +
 	"\x06secret\x18\x01 \x01(\tR\x06secret\x12\x16\n" +
@@ -700,16 +700,15 @@ const file_schema_proto_rawDesc = "" +
 	"\fimageQuality\x18\x06 \x01(\x05R\fimageQuality\"3\n" +
 	"\tUserPoint\x12\x12\n" +
 	"\x04free\x18\x01 \x01(\rR\x04free\x12\x12\n" +
-	"\x04paid\x18\x02 \x01(\rR\x04paid\"\xcb\x02\n" +
-	"\x15WebMangaViewerRequest\x12+\n" +
+	"\x04paid\x18\x02 \x01(\rR\x04paid\"\xe6\x02\n" +
+	"\x15WebMangaViewerRequest\x124\n" +
 	"\n" +
-	"deviceInfo\x18\x01 \x01(\v2\v.DeviceInfoR\n" +
+	"deviceInfo\x18\x01 \x01(\v2\x14.requests.DeviceInfoR\n" +
 	"deviceInfo\x12\x1c\n" +
-	"\tuseTicket\x18\x02 \x01(\bR\tuseTicket\x12.\n" +
-	"\fconsumePoint\x18\x03 \x01(\v2\n" +
-	".UserPointR\fconsumePoint\x12\x1c\n" +
-	"\tchapterId\x18\x04 \x01(\rR\tchapterId\x12P\n" +
-	"\x0fchapterArgument\x18\x05 \x01(\v2&.WebMangaViewerRequest.ChapterArgumentR\x0fchapterArgument\x1aG\n" +
+	"\tuseTicket\x18\x02 \x01(\bR\tuseTicket\x127\n" +
+	"\fconsumePoint\x18\x03 \x01(\v2\x13.requests.UserPointR\fconsumePoint\x12\x1c\n" +
+	"\tchapterId\x18\x04 \x01(\rR\tchapterId\x12Y\n" +
+	"\x0fchapterArgument\x18\x05 \x01(\v2/.requests.WebMangaViewerRequest.ChapterArgumentR\x0fchapterArgument\x1aG\n" +
 	"\x0fChapterArgument\x12\x18\n" +
 	"\amangaId\x18\x01 \x01(\rR\amangaId\x12\x1a\n" +
 	"\bposition\x18\x02 \x01(\x05R\bposition\"\xb7\x02\n" +
@@ -733,19 +732,18 @@ const file_schema_proto_rawDesc = "" +
 	"\x03url\x18\x01 \x01(\tR\x03url\"\n" +
 	"\n" +
 	"\bLastPage\"\v\n" +
-	"\tGoogleAds\"\x9f\x01\n" +
+	"\tGoogleAds\"\xc3\x01\n" +
 	"\n" +
-	"ViewerPage\x12\x1c\n" +
-	"\x05image\x18\x01 \x01(\v2\x06.ImageR\x05image\x12\"\n" +
-	"\awebview\x18\x02 \x01(\v2\b.WebViewR\awebview\x12%\n" +
-	"\blastPage\x18\x03 \x01(\v2\t.LastPageR\blastPage\x12(\n" +
-	"\tgoogleAds\x18\x04 \x01(\v2\n" +
-	".GoogleAdsR\tgoogleAds\"Y\n" +
+	"ViewerPage\x12%\n" +
+	"\x05image\x18\x01 \x01(\v2\x0f.requests.ImageR\x05image\x12+\n" +
+	"\awebview\x18\x02 \x01(\v2\x11.requests.WebViewR\awebview\x12.\n" +
+	"\blastPage\x18\x03 \x01(\v2\x12.requests.LastPageR\blastPage\x121\n" +
+	"\tgoogleAds\x18\x04 \x01(\v2\x13.requests.GoogleAdsR\tgoogleAds\"b\n" +
 	"\x12BookViewerResponse\x12 \n" +
-	"\vviewerTitle\x18\x01 \x01(\tR\vviewerTitle\x12!\n" +
-	"\x05pages\x18\x02 \x03(\v2\v.ViewerPageR\x05pages\"A\n" +
-	"\x16WebMangaViewerResponse\x12'\n" +
-	"\x04data\x18\x02 \x01(\v2\x13.BookViewerResponseR\x04dataB\vZ\t./rippersb\x06proto3"
+	"\vviewerTitle\x18\x01 \x01(\tR\vviewerTitle\x12*\n" +
+	"\x05pages\x18\x02 \x03(\v2\x14.requests.ViewerPageR\x05pages\"J\n" +
+	"\x16WebMangaViewerResponse\x120\n" +
+	"\x04data\x18\x02 \x01(\v2\x1c.requests.BookViewerResponseR\x04dataB\x11Z\x0f./protoRequestsb\x06proto3"
 
 var (
 	file_schema_proto_rawDescOnce sync.Once
@@ -761,28 +759,28 @@ func file_schema_proto_rawDescGZIP() []byte {
 
 var file_schema_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_schema_proto_goTypes = []any{
-	(*DeviceInfo)(nil),                            // 0: DeviceInfo
-	(*UserPoint)(nil),                             // 1: UserPoint
-	(*WebMangaViewerRequest)(nil),                 // 2: WebMangaViewerRequest
-	(*Image)(nil),                                 // 3: Image
-	(*WebView)(nil),                               // 4: WebView
-	(*LastPage)(nil),                              // 5: LastPage
-	(*GoogleAds)(nil),                             // 6: GoogleAds
-	(*ViewerPage)(nil),                            // 7: ViewerPage
-	(*BookViewerResponse)(nil),                    // 8: BookViewerResponse
-	(*WebMangaViewerResponse)(nil),                // 9: WebMangaViewerResponse
-	(*WebMangaViewerRequest_ChapterArgument)(nil), // 10: WebMangaViewerRequest.ChapterArgument
+	(*DeviceInfo)(nil),                            // 0: requests.DeviceInfo
+	(*UserPoint)(nil),                             // 1: requests.UserPoint
+	(*WebMangaViewerRequest)(nil),                 // 2: requests.WebMangaViewerRequest
+	(*Image)(nil),                                 // 3: requests.Image
+	(*WebView)(nil),                               // 4: requests.WebView
+	(*LastPage)(nil),                              // 5: requests.LastPage
+	(*GoogleAds)(nil),                             // 6: requests.GoogleAds
+	(*ViewerPage)(nil),                            // 7: requests.ViewerPage
+	(*BookViewerResponse)(nil),                    // 8: requests.BookViewerResponse
+	(*WebMangaViewerResponse)(nil),                // 9: requests.WebMangaViewerResponse
+	(*WebMangaViewerRequest_ChapterArgument)(nil), // 10: requests.WebMangaViewerRequest.ChapterArgument
 }
 var file_schema_proto_depIdxs = []int32{
-	0,  // 0: WebMangaViewerRequest.deviceInfo:type_name -> DeviceInfo
-	1,  // 1: WebMangaViewerRequest.consumePoint:type_name -> UserPoint
-	10, // 2: WebMangaViewerRequest.chapterArgument:type_name -> WebMangaViewerRequest.ChapterArgument
-	3,  // 3: ViewerPage.image:type_name -> Image
-	4,  // 4: ViewerPage.webview:type_name -> WebView
-	5,  // 5: ViewerPage.lastPage:type_name -> LastPage
-	6,  // 6: ViewerPage.googleAds:type_name -> GoogleAds
-	7,  // 7: BookViewerResponse.pages:type_name -> ViewerPage
-	8,  // 8: WebMangaViewerResponse.data:type_name -> BookViewerResponse
+	0,  // 0: requests.WebMangaViewerRequest.deviceInfo:type_name -> requests.DeviceInfo
+	1,  // 1: requests.WebMangaViewerRequest.consumePoint:type_name -> requests.UserPoint
+	10, // 2: requests.WebMangaViewerRequest.chapterArgument:type_name -> requests.WebMangaViewerRequest.ChapterArgument
+	3,  // 3: requests.ViewerPage.image:type_name -> requests.Image
+	4,  // 4: requests.ViewerPage.webview:type_name -> requests.WebView
+	5,  // 5: requests.ViewerPage.lastPage:type_name -> requests.LastPage
+	6,  // 6: requests.ViewerPage.googleAds:type_name -> requests.GoogleAds
+	7,  // 7: requests.BookViewerResponse.pages:type_name -> requests.ViewerPage
+	8,  // 8: requests.WebMangaViewerResponse.data:type_name -> requests.BookViewerResponse
 	9,  // [9:9] is the sub-list for method output_type
 	9,  // [9:9] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name

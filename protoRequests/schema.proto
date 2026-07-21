@@ -1,6 +1,7 @@
 // schema.proto
 syntax = "proto3";
-option go_package = "./rippers";
+package requests; // Unique package name
+option go_package = "./protoRequests";
 
 message DeviceInfo {
   string secret = 1;
