@@ -79,6 +79,32 @@ type PagePropsDataData struct {
 	MangaName string `json:"mangaName"`
 }
 
+
+type GanImage struct {
+	ImageURL string `json:"ImageURL"`
+}
+
+type GanPageObject struct {
+	Image GanImage `json:"Image"` 
+}
+
+type GanData struct {
+	ChapterName string `json:"chapterName"`
+	Pages []GanPageObject `json:"pages"`
+}
+
+type GanPageProps struct {
+	Data GanData `json:"Data"`
+}
+
+type GanProps struct {
+	PageProps GanPageProps `json:"PageProps"`
+}
+
+type GanResponse struct {
+	Props GanProps `json:"props"`
+}
+
 type GigaResponse struct {
 	ReadableProduct ReadBleProduct `json:"readableProduct"`
 }

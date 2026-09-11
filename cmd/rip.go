@@ -6,7 +6,6 @@ package cmd
 // Imports
 import (
 	"context"
-	"fmt"
 	"slices"
 	"strings"
 
@@ -90,6 +89,13 @@ func getFuz() []string {
 	return comiciReaders[:]
 }
 
+func getGanGan() []string {
+	comiciReaders := [...]string{
+		"www.ganganonline.com",
+	}
+	return comiciReaders[:]
+}
+
 // Main function to organize everything
 func RipMain(url string, cookie string, ctx context.Context, folder string) {
 	if url == "" {
@@ -103,10 +109,12 @@ func RipMain(url string, cookie string, ctx context.Context, folder string) {
 			comiciReaders := getComiciReaders()
 			pixiv := getPixiv()
 			fuz := getFuz()
+			ganGan := getGanGan()
 			isGiga := slices.Contains(gigaReaders, strings.Split(url, "/")[2])
 			isComici := slices.Contains(comiciReaders, strings.Split(url, "/")[2])
 			isPixiv := slices.Contains(pixiv, strings.Split(url, "/")[2])
 			isFuz := slices.Contains(fuz, strings.Split(url, "/")[2])
+			isGanGan := slices.Contains(ganGan, strings.Split(url, "/")[2])
 			// Rip accordingly.
 			if isGiga {
 				rippers.RipGiga(url, cookie, ctx, folder)
@@ -116,6 +124,8 @@ func RipMain(url string, cookie string, ctx context.Context, folder string) {
 				rippers.RipPixiv(url, cookie, ctx, folder)
 			} else if isFuz {
 				rippers.RipFuz(url, cookie, ctx, folder)
+			} else if isGanGan {
+				rippers.RipGanGan(url, cookie, ctx, folder)
 			} else {
 				runtime.EventsEmit(ctx, "error-emit", "We currently do not support this url. Apologies!")
 			}
