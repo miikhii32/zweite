@@ -75,13 +75,13 @@ func (a *App) GetDefaultDocumentsFolder() (string, error) {
 	// 2. Adjust the folder name based on the operating system
 	if runner.GOOS == "windows" {
 		// On Windows, the folder is usually named "Documents" inside the profile folder
-		documentsDir = filepath.Join(homeDir, "Documents", "HebiStuff")
+		documentsDir = filepath.Join(homeDir, "Documents", "zweite")
 	} else if runner.GOOS == "darwin" {
 		// On macOS, it's also named "Documents" inside the user home folder
-		documentsDir = filepath.Join(homeDir, "Documents", "HebiStuff")
+		documentsDir = filepath.Join(homeDir, "Documents", "zweite")
 	} else {
 		// On Linux/Unix, it usually follows XDG user dirs, defaulting to "Documents"
-		documentsDir = filepath.Join(homeDir, "Documents", "HebiStuff")
+		documentsDir = filepath.Join(homeDir, "Documents", "zweite")
 	}
 
 	return documentsDir, nil
