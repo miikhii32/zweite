@@ -1,5 +1,5 @@
 /*
-Copyright © 2026 mikhi32
+Copyright © 2026
 */
 package cmd
 
