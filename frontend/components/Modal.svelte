@@ -16,9 +16,14 @@
 
 <dialog bind:this={dialogElement} on:close={() => (open = false)} class="modal">
   <div class="modal-content">
-    <slot />
-
-    <button class="close-btn" on:click={() => (open = false)}> Close </button>
+  <h1 style="color: white;">Add cookies</h1>
+    <div class="modal-slot">
+      <slot />
+  
+    </div>
+    <div class="modal-btn">
+      <button class="other-btn" on:click={() => (open = false)}> Close </button>
+    </div>
   </div>
 </dialog>
 <style>
@@ -52,18 +57,45 @@
     animation: fadeIn 0.25s ease-out forwards;
   }
 
-  .modal-content {
-    padding: 24px;
+  .modal-content{
+    width: 100%;
   }
 
-  .close-btn {
+  .modal-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .other-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 16px;
     padding: 8px 16px;
-    background-color: #ef4444;
-    color: white;
+    font-weight: 600;
+    font-size: small;
+    background-color: #1e1b4b;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 15rem;
+    height: 2.5rem;
+    transition:
+      background-color 0.2s ease,
+      opacity 0.2s ease; 
+  }
+
+  .other-btn:hover:not(.disabled) {
+    background-color: #3b82f6;
   }
 
   /* --- Keyframe Animations --- */
@@ -77,6 +109,8 @@
       opacity: 1;
     }
   }
+
+  
 
   @keyframes fadeIn {
     from {

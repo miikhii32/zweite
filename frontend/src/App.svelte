@@ -135,15 +135,11 @@
             </div>
             {#if isModalOpen}
             <Modal bind:open={isModalOpen}>
-                <h2>Add cookies</h2>
-                <div class="input-div">
-                  <input
-                    type="text"
-                    class="input-box"
+                  <textarea
+                    class="input-field-modal"
                     placeholder="Paste your cookies here!"
                     bind:value={cookies}
                   />
-                </div>
               </Modal>
             {/if}
           </div>
@@ -223,6 +219,34 @@
   }
 
   .input-field:focus {
+    border-color: #93c5fd;
+  }
+ 
+  .input-field-modal {
+    width: 64%;
+    height: 7rem;
+    padding: 1rem 7rem 1rem 1rem;
+    border-radius: 4px;
+    background-color: rgba(82, 82, 82, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 2px solid transparent;
+    color: #fff;
+    outline: none;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+  }
+
+  .input-field-modal::placeholder {
+    color: #d4d4d4;
+  }
+
+  .input-field-modal:hover {
+    border-color: #3b82f6;
+  }
+
+  .input-field-modal:focus {
     border-color: #93c5fd;
   }
 
