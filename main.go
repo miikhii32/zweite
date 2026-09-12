@@ -20,6 +20,7 @@ func main() {
 		Title:  "zweite",
 		Width:  1024,
 		Height: 768,
+		WindowStartState: options.Maximised,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},

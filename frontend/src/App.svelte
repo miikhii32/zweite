@@ -68,6 +68,7 @@
     resultText = "";
     downloadedPages = 0;
     totalPages = 0;
+    resultText = "Finding your raws... give us a second";
     Rip(url, cookies, selectedFolder);
     url = "";
   }
@@ -79,70 +80,74 @@
       <h1>zwite</h1>
     </div>
     <div class="center-content">
-      <div class="input-wrapper">
-        <input
-          type="text"
-          class="input-field"
-          placeholder="Paste your link here!"
-          bind:value={url}
-        />
-        <div class="button-wrapper">
-          <button class="submit-btn" on:click={greet}>Submit!</button>
-        </div>
-        {#if err}
-          <p>{errMsg}</p>
-        {:else if resultText !== ""}
-          <div class="progress-card">
-            <!-- Status Header -->
-            <div class="card-header">
-              <h3 class="status-title">{resultText}</h3>
-            </div>
-
-            <!-- Progress Track & Fill -->
-            <div class="track-wrapper">
-              <div
-                class="progress-track"
-                role="progressbar"
-                aria-valuenow={(downloadedPages / totalPages) * 100}
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                <div
-                  class="progress-fill"
-                  style="width: {(downloadedPages / totalPages) * 100}%"
-                >
-                  <div class="glow-head"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <span class="percentage">{downloadedPages}/{totalPages}</span>
-            </div>
-          </div>
-        {/if}
-      </div>
-    </div>
-    <div class="">
-      <button class="submit-btn" on:click={() => (isModalOpen = true)}
-        >Add Cookies</button
-      >
-    </div>
-    <div class="container">
-      <button class="input-btn" on:click={handlePickFolder}>
-        Choose Download Location
-      </button>
-      <Modal bind:open={isModalOpen}>
-        <h2>Add cookies</h2>
-        <div class="input-div">
+      <div class="main-card-stack">
+        <div class="input-wrapper">
           <input
             type="text"
-            class="input-box"
-            placeholder="Paste your cookies here!"
-            bind:value={cookies}
+            class="input-field"
+            placeholder="Paste your link here!"
+            bind:value={url}
           />
+          <div class="button-wrapper">
+            <button class="submit-btn" on:click={greet}>Submit!</button>
+          </div>
         </div>
-      </Modal>
+        <div>
+          {#if err}
+            <p>{errMsg}</p>
+          {:else if resultText !== ""}
+            <div class="progress-card">
+              <!-- Status Header -->
+              <div class="card-header">
+                <h3 class="status-title">{resultText}</h3>
+              </div>
+              {#if resultText !== "Finding your raws... give us a second"}
+                <!-- Progress Track & Fill -->
+                <div class="track-wrapper">
+                  <div
+                    class="progress-track"
+                    role="progressbar"
+                    aria-valuenow={(downloadedPages / totalPages) * 100}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                  <div
+                    class="progress-fill"
+                    style="width: {(downloadedPages / totalPages) * 100}%"
+                  >
+                    <div class="glow-head"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <span class="percentage">{downloadedPages}/{totalPages}</span>
+              </div>
+              {/if}
+            </div>
+          {/if}
+      </div>
+          <div>
+            <div class="other-btn-containers">
+              <button class="other-btn" on:click={() => (isModalOpen = true)}>Add Cookies</button>
+              <button class="other-btn" on:click={handlePickFolder}>
+                Choose Download Location
+              </button>
+            </div>
+            {#if isModalOpen}
+            <Modal bind:open={isModalOpen}>
+                <h2>Add cookies</h2>
+                <div class="input-div">
+                  <input
+                    type="text"
+                    class="input-box"
+                    placeholder="Paste your cookies here!"
+                    bind:value={cookies}
+                  />
+                </div>
+              </Modal>
+            {/if}
+          </div>
+      </div>
     </div>
   </div>
 </main>
@@ -152,8 +157,12 @@
   .app-container {
     height: 100dvh;
     width: 100vw;
-    background-color: #000;
-    background-image: url("https://pixiv.re/99817334.jpg"); /* Fallback image endpoint */
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.75),
+      rgba(30, 41, 59, 0.35),
+      transparent
+    );
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -177,6 +186,14 @@
     align-items: center;
   }
 
+  .main-card-stack {
+    width: min(84rem, 90%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Controls space between input box and progress card */
+  }
+
   .input-wrapper {
     position: relative;
     width: min(64rem, 90%);
@@ -185,7 +202,7 @@
   .input-field {
     width: 100%;
     padding: 1rem 7rem 1rem 1rem;
-    border-radius: 9999px;
+    border-radius: 4px;
     background-color: rgba(82, 82, 82, 0.9);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -202,11 +219,11 @@
   }
 
   .input-field:hover {
-    border-color: #c084fc;
+    border-color: #3b82f6;
   }
 
   .input-field:focus {
-    border-color: #d8b4fe;
+    border-color: #93c5fd;
   }
 
   .button-wrapper {
@@ -224,10 +241,10 @@
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     font-weight: 600;
-    background-color: #9333ea;
+    background-color: #1e1b4b;
     color: #fff;
     border: none;
-    border-radius: 9999px;
+    border-radius: 4px;
     cursor: pointer;
     transition:
       background-color 0.2s ease,
@@ -235,7 +252,31 @@
   }
 
   .submit-btn:hover:not(.disabled) {
-    background-color: #a855f7;
+    background-color: #3b82f6;
+  }
+  .other-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: small;
+    background-color: #1e1b4b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 15rem;
+    height: 2.5rem;
+    text-align: center;
+    transition:
+      background-color 0.2s ease,
+      opacity 0.2s ease; 
+  }
+
+  .other-btn:hover:not(.disabled) {
+    background-color: #3b82f6;
   }
 
   /* Header & Navigation Bar */
@@ -245,31 +286,30 @@
     left: 0;
     width: 100%;
     padding: 1rem;
-    box-sizing: border-box;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.75),
-      rgba(0, 0, 0, 0.5),
-      transparent
-    );
+    box-sizing: border-box; 
+    justify-content: center;
   }
 /* Glassmorphic Container Box */
   .progress-card {
-    width: min(40rem, 90%);
+    width: 50rem;
     padding: 1.75rem 2rem;
-    background-color: rgba(38, 38, 38, 0.75);
+    background-color: #1e1b4b;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(192, 132, 252, 0.35);
+    border: 1px solid rgba(99, 102, 241, 0.35);
     border-radius: 1.5rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6),
-                0 0 30px rgba(147, 51, 234, 0.15);
+    box-shadow: 
+  0 20px 40px rgba(0, 0, 0, 0.6),
+  0 0 30px rgba(30, 27, 75, 0.4);
     color: #fff;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
   }
 
   /* Header Section */
@@ -297,7 +337,7 @@
     width: 100%;
     height: 1.25rem;
     background-color: rgba(23, 23, 23, 0.8);
-    border-radius: 9999px;
+    border-radius: 4px;
     overflow: hidden;
     position: relative;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
@@ -306,11 +346,10 @@
   /* Animated Fill Bar */
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7e22ce 0%, #a855f7 50%, #c084fc 100%);
-    border-radius: 9999px;
+    background: linear-gradient(90deg, #1d4ed8 0%, #3b82f6 50%, #93c5fd 100%);
+    border-radius: 4px;
     position: relative;
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 12px rgba(168, 85, 247, 0.8);
   }
 
   /* Glowing Lead Edge */
@@ -319,10 +358,9 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 12px;
+    width: 20px;
     background: #ffffff;
-    border-radius: 9999px;
-    filter: blur(2px);
+    border-radius: 4px;
     opacity: 0.8;
   }
 
@@ -338,5 +376,33 @@
     font-weight: 600;
     color: #d8b4fe;
     letter-spacing: 0.02em;
+  }
+
+ .other-btn-containers {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem; /* Controls distance between the buttons */
+    width: 100%;
+    justify-content: center;
+ }
+
+  @media (max-width: 840px) {
+    .progress-card {
+      width: 30rem;
+    }
+  }
+
+
+  
+  @media (max-width: 640px) {
+    .progress-card {
+      width: 20rem;
+    }
+  }
+  
+  @media (max-width: 440px) {
+    .progress-card {
+      width: 10rem;
+    }
   }
 </style>

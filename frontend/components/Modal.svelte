@@ -29,8 +29,11 @@
     border-radius: 8px;
     padding: 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    max-width: 500px;
     width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Trigger the opening animation when the native [open] attribute is applied */
