@@ -146,6 +146,8 @@ func downloadPagesComici(pages []utils.ComiciResult, title string, ctx context.C
 	// Log to tell the user.
 	runtime.EventsEmit(ctx, "title-get", "Downloading "+title)
 
+	runtime.EventsEmit(ctx, "total-page", strconv.Itoa(len(pages)))
+
 	// Loop over pages.
 	for index, value := range pages {
 		// Get the full path.
@@ -210,7 +212,7 @@ func downloadPagesComici(pages []utils.ComiciResult, title string, ctx context.C
 		}
 
 		// Log that you're done with the page page.
-		runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled "+fullPath)
+		runtime.EventsEmit(ctx, "new-page", "")
 	}
 
 	// Final log

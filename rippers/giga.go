@@ -79,6 +79,8 @@ func downloadPagesGiga(pages []utils.GigaPages, title string, ctx context.Contex
 
 	runtime.EventsEmit(ctx, "title-get", "Downloading "+title)
 
+	runtime.EventsEmit(ctx, "total-page", strconv.Itoa(len(pages)))
+
 	// Loop over all the pages
 	for index, value := range pages {
 		// Get the full path.
@@ -156,7 +158,7 @@ func downloadPagesGiga(pages []utils.GigaPages, title string, ctx context.Contex
 		}
 
 		// Final log message.
-		runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled "+fullPath)
+		runtime.EventsEmit(ctx, "new-page", "")
 	}
 
 	runtime.EventsEmit(ctx, "title-get", "Done! Enjoy!")

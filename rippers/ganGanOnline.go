@@ -64,6 +64,7 @@ func downloadPagesGanGan(pages []string, title string, ctx context.Context, fold
 
 
 	runtime.EventsEmit(ctx, "title-get", "Downloading "+title)
+	runtime.EventsEmit(ctx, "total-page", strconv.Itoa(len(pages)))
 
 	// Loop over all the pages
 	for index, value := range pages {
@@ -92,7 +93,7 @@ func downloadPagesGanGan(pages []string, title string, ctx context.Context, fold
 		}
 
 		// Final log message.
-		runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled "+fullPath)
+		runtime.EventsEmit(ctx, "new-page", "")
 	}
 
 	runtime.EventsEmit(ctx, "title-get", "Done! Enjoy!")

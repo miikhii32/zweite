@@ -241,7 +241,8 @@ func downloadPagesFuz(pages []*pb.ViewerPage, pagesBook []*pbBook.ViewerPage, ti
 	// Make the directory of the downloaded file
 	os.Mkdir(path.Join(folder, title), os.ModePerm)
 
-	runtime.EventsEmit(ctx, "title-get", "Downloading "+title)
+	runtime.EventsEmit(ctx, "title-get", "Downloading "+ title)
+	runtime.EventsEmit(ctx, "total-page", strconv.Itoa(len(pages)))
 
 	if pages != nil {
 
@@ -282,7 +283,7 @@ func downloadPagesFuz(pages []*pb.ViewerPage, pagesBook []*pbBook.ViewerPage, ti
 				}
 
 				// Final log message.
-				runtime.EventsEmit(ctx, "title-get", "Downloaded and De-Scrambled "+fullPath)
+				runtime.EventsEmit(ctx, "new-page", "")
 			}
 		}
 
