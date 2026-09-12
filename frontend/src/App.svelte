@@ -78,6 +78,7 @@
   <div class="app-container">
     <div class="top-nav">
       <h1>zweite</h1>
+      <p style="font-size: x-small; margin-top: 0px;">V 1.0.0</p>
     </div>
     <div class="center-content">
       <div class="main-card-stack">
