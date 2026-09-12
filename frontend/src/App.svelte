@@ -77,7 +77,7 @@
 <main>
   <div class="app-container">
     <div class="top-nav">
-      <h1>zwite</h1>
+      <h1>zweite</h1>
     </div>
     <div class="center-content">
       <div class="main-card-stack">
