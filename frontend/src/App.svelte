@@ -65,7 +65,11 @@
     if (selectedFolder === "") {
       selectedFolder = await GetDefaultDocumentsFolder();
     }
+    resultText = "";
+    downloadedPages = 0;
+    totalPages = 0;
     Rip(url, cookies, selectedFolder);
+    url = "";
   }
 </script>
 
