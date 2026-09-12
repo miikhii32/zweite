@@ -1,5 +1,9 @@
 # zweite
 
+<p align="center">
+    <img src="./build/appicon.png" width=128/>
+</p>
+
 zweite is a program to download Japanese Raws. It's a desktop app that supports all major platforms.
 
 Using it is fairly trivial, just copy and paste your URL in the text box, and press download. By default, it saves your files in /Documents/zweite, but you can change that that fairly trivially too. Additionally, if you need to add cookies to log into a certain site, then you can also add them by clicking in the appropriate button, adding them, and closing the modal.
