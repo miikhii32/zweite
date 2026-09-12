@@ -94,7 +94,12 @@
         </div>
         <div>
           {#if err}
-            <p>{errMsg}</p>
+             <div class="progress-card">
+              <!-- Status Header -->
+              <div class="card-header">
+                <h3 class="status-title">{errMsg}</h3>
+              </div>
+             </div>
           {:else if resultText !== ""}
             <div class="progress-card">
               <!-- Status Header -->
